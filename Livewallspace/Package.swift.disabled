@@ -1,0 +1,46 @@
+// swift-tools-version: 5.10
+import PackageDescription
+
+let package = Package(
+    name: "Livewallspace",
+    platforms: [
+        .macOS(.v14)
+    ],
+    products: [
+        .executable(name: "Livewallspace", targets: ["Livewallspace"])
+    ],
+    targets: [
+        .executableTarget(
+            name: "Livewallspace",
+            path: ".",
+            exclude: [
+                "lock-sceen-vid.mp4",
+                "Docs",
+                "Extensions",
+                "Livewallspace.entitlements"
+            ],
+            sources: [
+                "AppDelegate.swift",
+                "DesktopWallpaperWindow.swift",
+                "ExploreView.swift",
+                "ExploreViewModel.swift",
+                "HomeView.swift",
+                "LibraryView.swift",
+                "LivewallspaceApp.swift",
+                "LivewallspaceSharedContract.swift",
+                "LockScreenContinuityManager.swift",
+                "LockScreenSystemIntegrationManager.swift",
+                "MainShellView.swift",
+                "MoewallsService.swift",
+                "PersistenceModels.swift",
+                "SettingsView.swift",
+                "SettingsViewModel.swift",
+                "VideoPlayerView.swift",
+                "VideoPreparationService.swift",
+                "WallpaperManager.swift",
+                "WallpaperPlaybackEngine.swift",
+                "WindowChromeConfigurator.swift"
+            ]
+        )
+    ]
+)

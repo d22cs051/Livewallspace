@@ -1,0 +1,17 @@
+//
+//  LivewallspaceApp.swift
+//  Livewallspace
+//
+//  Created by tron on 19/03/26.
+//
+
+import SwiftUI
+
+@main
+struct LivewallspaceApp: App {
+    var body: some Scene {
+        WindowGroup {
+            ContentView()
+        }
+    }
+}

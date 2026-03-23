@@ -1,0 +1,61 @@
+name: Build and Release (main)
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build-and-release:
+    runs-on: macos-14
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Select Xcode
+        run: sudo xcode-select -s /Applications/Xcode.app/Contents/Developer
+
+      - name: Build Release app
+        run: |
+          xcodebuild \
+            -project Livewallspace.xcodeproj \
+            -scheme Livewallspace \
+            -configuration Release \
+            -derivedDataPath build \
+            CODE_SIGNING_ALLOWED=NO
+
+      - name: Package app
+        run: |
+          APP_PATH="build/Build/Products/Release/Livewallspace.app"
+          if [ ! -d "$APP_PATH" ]; then
+            echo "App bundle not found at $APP_PATH"
+            exit 1
+          fi
+
+          ZIP_NAME="Livewallspace-macos-arm64-${GITHUB_SHA::7}.zip"
+          ditto -c -k --sequesterRsrc --keepParent "$APP_PATH" "$ZIP_NAME"
+          echo "zip_name=$ZIP_NAME" >> "$GITHUB_OUTPUT"
+        id: package
+
+      - name: Generate release tag
+        run: |
+          TAG="main-${GITHUB_RUN_NUMBER}-${GITHUB_SHA::7}"
+          echo "tag=$TAG" >> "$GITHUB_OUTPUT"
+        id: tag
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ steps.tag.outputs.tag }}
+          name: Livewallspace build ${{ github.run_number }}
+          body: |
+            Automated build from main.
+
+            Commit: ${{ github.sha }}
+          files: |
+            ${{ steps.package.outputs.zip_name }}
