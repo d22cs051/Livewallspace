@@ -85,6 +85,12 @@ If you have an Apple Silicon Mac and prefer not to build from source, you can us
 
 **Note:** The prebuilt app is code-signed and ready to run. No build tools or Xcode installation required.
 
+If the app does not open due to macOS quarantine, run:
+
+```bash
+xattr -d com.apple.quarantine /Applications/Livewallspace.app
+```
+
 ## How to Use
 
 ### 1) Import and Apply a Video
@@ -133,11 +139,6 @@ If you cannot see the video:
 - If sync says no video is selected, first import/apply a video, then sync.
 - Use the Library tab for quick re-apply of saved wallpapers.
 - Use frame-rate and aspect-ratio settings to balance quality/performance.
-- If the prebuilt app does not open after moving it to Applications, run:
-
-```bash
-xattr -d com.apple.quarantine /Applications/Livewallspace.app
-```
 
 ## Disclaimer
 
