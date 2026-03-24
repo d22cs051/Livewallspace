@@ -1,5 +1,7 @@
 # Livewallspace
 
+**[♥️ Support this project on Ko-fi](https://ko-fi.com/troncorp)** — Your support helps development! ☕
+
 Livewallspace is a macOS app for applying animated video wallpapers to your desktop, importing videos from MoeWalls, and syncing your current wallpaper video into macOS Wallpaper settings (Custom Videos).
 
 ## Features
@@ -139,6 +141,14 @@ If you cannot see the video:
 - If sync says no video is selected, first import/apply a video, then sync.
 - Use the Library tab for quick re-apply of saved wallpapers.
 - Use frame-rate and aspect-ratio settings to balance quality/performance.
+
+## Support
+
+If you find Livewallspace helpful and would like to support development, please consider:
+
+**[Donate on Ko-fi ☕](https://ko-fi.com/troncorp)**
+
+Your support helps keep this project maintained and improved!
 
 ## Disclaimer
 
