@@ -7,21 +7,33 @@ final class VideoItem {
     @Attribute(.unique) var urlString: String
     var name: String
     var category: String
+    var thumbnailURLString: String?
     var createdAt: Date
 
     @Relationship(inverse: \Playlist.items)
     var playlists: [Playlist]
 
-    init(url: URL, name: String, category: String, createdAt: Date = .now) {
+    init(url: URL, name: String, category: String, thumbnailURL: URL? = nil, createdAt: Date = .now) {
         self.urlString = url.absoluteString
         self.name = name
         self.category = category
+        self.thumbnailURLString = thumbnailURL?.absoluteString
         self.createdAt = createdAt
         self.playlists = []
     }
 
     var url: URL? {
         URL(string: urlString)
+    }
+
+    var thumbnailURL: URL? {
+        get {
+            guard let thumbnailURLString else { return nil }
+            return URL(string: thumbnailURLString)
+        }
+        set {
+            thumbnailURLString = newValue?.absoluteString
+        }
     }
 }
 
