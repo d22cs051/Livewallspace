@@ -2,6 +2,7 @@ import SwiftUI
 import Combine
 
 struct SettingsView: View {
+    @Environment(\.dismiss) private var dismiss
     @StateObject private var viewModel = SettingsViewModel()
 
     var body: some View {
@@ -33,10 +34,6 @@ struct SettingsView: View {
                     HStack {
                         Button("Open Wallpaper Settings") {
                             viewModel.openWallpaperSettingsForIntegration()
-                        }
-
-                        Button("Open Integration Guide") {
-                            viewModel.openIntegrationGuide()
                         }
                     }
 
@@ -87,6 +84,20 @@ struct SettingsView: View {
                     .font(.system(size: 12, weight: .medium, design: .rounded))
                     .foregroundStyle(.orange)
             }
+
+            HStack {
+                Spacer()
+                Button("Close") {
+                    dismiss()
+                    NSApp.keyWindow?.performClose(nil)
+                }
+                .buttonStyle(.plain)
+                .font(.system(size: 13, weight: .bold, design: .rounded))
+                .foregroundStyle(.black)
+                .padding(.horizontal, 14)
+                .padding(.vertical, 9)
+                .background(Color.white, in: Capsule(style: .continuous))
+            }
         }
         .padding(20)
         .frame(minWidth: 560, minHeight: 360)
@@ -101,11 +112,11 @@ private extension SettingsView {
         }
 
         if !viewModel.nativeLockScreenConfigured {
-            return "App Group entitlement is not active yet. Open the integration guide and enable group.com.livewallspace.shared for both app and extension targets."
+            return "App Group entitlement is not active yet. Enable group.com.livewallspace.shared for both app and extension targets."
         }
 
         if !viewModel.nativeLockScreenExtensionInstalled {
-            return "The lock-screen extension is not embedded in this build. Build and run from Xcode with the extension target, not swift run."
+            return "Native lock-screen integration is currently unavailable for this build."
         }
 
         return "Uses Apple's system lock screen pipeline once the Livewallspace extension is selected in Wallpaper settings."
